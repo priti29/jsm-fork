@@ -1,0 +1,166 @@
+﻿@page "/account"
+@model jsm33t.com.Pages.Account.ProfileModel
+@{
+    
+}
+<div class="container py-5 mt-4 mt-lg-5 mb-lg-4 my-xl-5">
+   <div class="row pt-sm-2 pt-lg-0">
+      <div class="col-lg-12 pt-4 pb-2 pb-sm-4">
+         <h1 class="h2 mb-4">Profile</h1>
+         <section class="card border-0 py-1 p-md-2 p-xl-3 p-xxl-4 mb-4">
+            <div class="card-body">
+               <div class="d-flex align-items-center mt-sm-n1 pb-4 mb-0 mb-lg-1 mb-xl-3">
+                  <i class="ai-user text-primary lead pe-1 me-2"></i>
+                  <h2 class="h4 mb-0">Basic info</h2>
+               </div>
+               <div id="profilepanel">
+                  <div class="d-md-flex align-items-center">
+                     <div class="d-sm-flex align-items-center">
+                        <div id="avatar_placeholder" class="rounded-circle bg-size-cover bg-position-center flex-shrink-0" style="width: 80px; height: 80px; background-image: url(/assets/images/avatars/default/mask.png);"></div>
+                        <div class="pt-3 pt-sm-0 ps-sm-3">
+                           <h3 class="h5 mb-2">
+                              <span id="profilename">  
+                                @ViewData["fullname"]
+                              </span>
+                           </h3>
+                           <div class="text-muted fw-medium d-flex flex-wrap flex-sm-nowrap align-iteems-center">
+                              <div class="d-flex align-items-center me-3">
+                                 <i class="ai-user me-1"></i>
+                                 @ViewData["role"]
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="w-100 pt-3 pt-md-0 ms-md-auto col-sm-12" style="max-width: 212px;">
+                        <div class="d-flex justify-content-between fs-sm pb-1 mb-2">Select your avatar</div>
+                        <select name="avatar" id="avatars" class="form-select">
+                           @if (Model.AvatarDD != null)
+                           { 
+                               @foreach (var avatar in Model.AvatarDD)
+                               {  
+                               <option value="@avatar.Image">@avatar.Title</option>
+                               }
+                           }
+                        </select>
+                     </div>
+                  </div>
+               </div>
+                    @if (Model.UserDetailsDisplay != null)
+                    {
+                        <div class="row g-3 g-sm-4 mt-0 mt-lg-2">
+                           <div class="col-sm-6">
+                              <label class="form-label" for="fn">First name</label>
+                              <input name="fname" type="text" id="firstname" class="form-control bindenter1" aria-autocomplete="none" value="@Model.UserDetailsDisplay.FirstName" />
+                           </div>
+                           <div class="col-sm-6">
+                              <label class="form-label" for="ln">Last name</label>
+                              <input name="lname" type="text" id="lastname" class="form-control bindenter1" aria-autocomplete="none" value="@Model.UserDetailsDisplay.LastName" />
+                           </div>
+                           <div class="col-sm-6">
+                              <label class="form-label" for="email">Email address</label>
+                              <input name="email" type="text" id="email" class="form-control bindenter1" placeholder="Enter your email" value="@Model.UserDetailsDisplay.Email" aria-autocomplete="none" />
+                           </div>
+                           <div class="col-sm-6">
+                              <label class="form-label" for="phone">Phone <span class='text-muted'>(optional)</span></label>
+                              <input name="phone" type="tel" id="phone" class="form-control bindenter1" value="@Model.UserDetailsDisplay.Phone" data-format="{&quot;numericOnly&quot;: true, &quot;delimiters&quot;: [&quot;+1 &quot;, &quot; &quot;, &quot; &quot;], &quot;blocks&quot;: [0, 3, 3, 2]}" placeholder="" />
+                           </div>
+                           <div class="col-12 d-sm-flex align-items-center pt-sm-2 pt-md-3">
+                              <div class="form-label text-muted mb-2 mb-sm-0 me-sm-4">Gender:</div>
+                              <div class="form-check form-check-inline mb-0">
+                                 <input value="m" name="gender" type="radio" id="male" class="form-check-input" />
+                                 <label class="form-check-label" for="male">Male</label>
+                              </div>
+                              <div class="form-check form-check-inline mb-0">
+                                 <input value="f" name="gender" type="radio" id="female" class="form-check-input" />
+                                 <label class="form-check-label" for="female">Female</label>
+                              </div>
+                              <div class="form-check form-check-inline mb-0">
+                                 <input value="o" name="gender" type="radio" id="other" class="form-check-input" />
+                                 <label class="form-check-label" for="other">Other</label>
+                              </div>
+                           </div>
+                           <div class="col-12 d-flex justify-content-end pt-3">
+                              <button class="btn btn-primary ms-3" type="button" id="saveprof" onclick="save_prof()">Save Profile</button>
+                           </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <span> Something went wrong</span>
+                    }
+
+               <div id="profstat"></div>
+            </div>
+         </section>
+         <section class="card border-0 py-1 p-md-2 p-xl-3 p-xxl-4 mb-4">
+            <div class="card-body">
+               <div class="d-flex align-items-center pb-4 mt-sm-n1 mb-0 mb-lg-1 mb-xl-3">
+                  <i
+                     class="ai-lock-closed text-primary lead pe-1 me-2"></i>
+                  <h2 class="h4 mb-0">Password</h2>
+               </div>
+               <div class="row align-items-center g-3 g-sm-4 pb-3">
+                  <div class="col-sm-6">
+                     <label class="form-label" for="new-pass">New password</label>
+                     <div class="password-toggle">
+                        <input name="new_pass" type="password" id="new_pass" class="form-control bindenter2" />
+                        <label class="password-toggle-btn" aria-label="Show/hide password">
+                        <input class="password-toggle-check bindenter2" type="checkbox"><span class="password-toggle-indicator"></span>
+                        </label>
+                     </div>
+                  </div>
+                  <div class="col-sm-6">
+                     <label class="form-label" for="confirm-pass">Confirm new password</label>
+                     <div class="password-toggle">
+                        <input name="confirm_pass" type="password" id="confirm_pass" class="form-control bindenter2" />
+                        <label class="password-toggle-btn" aria-label="Show/hide password">
+                        <input class="password-toggle-check bindenter2" type="checkbox"><span class="password-toggle-indicator"></span>
+                        </label>
+                     </div>
+                  </div>
+               </div>
+               <span id="db_stat"></span>
+               <div class="d-flex justify-content-end pt-3">
+                  <button class="btn btn-primary ms-3" type="button" id="save_password" onclick="save_pass()">Save Changes</button>
+                  </span>
+               </div>
+               <div id="passstatpanel"></div>
+            </div>
+         </section>
+      </div>
+   </div>
+</div>
+<hr class="d-none d-dark-mode-block">
+
+  
+@section PageScripts
+{
+       <script>
+            function save_prof() {
+               $("#saveprof").html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving');
+               $("#saveprof").attr("class", "btn btn-primary pe-none");
+               // var mailSubc = $("#userEmail").val();
+               //  var token = $('input[name="__RequestVerificationToken"]').val();
+               $.ajax({
+                  type: "POST",
+                  url: "/account?handler=SubmitDeets",
+                  contentType: 'application/json',
+                  data: JSON.stringify({
+                     FirstName: $("#firstname").val(),
+                     LastName: $("#lastname").val()
+                  }),
+                  success: function (data) {
+                     $("#saveprof").html('Subscribe');
+                     $("#saveprof").attr("class", "btn btn-primary");
+                     $("#profstat").html("<div class=\"subscription-status mx-auto status-" + data.type + "\">" + data.message + "</div>");
+                  },
+                  error: function (jqXHR, textStatus, errorThrown) {
+                     console.log("Error:", errorThrown);
+                     $("#saveprof").html('Subscribe');
+                     $("#saveprof").attr("class", "btn btn-primary");
+                     $("#profstat").html("<div class=\"subscription-status mx-auto status-error\">something went wrong</div>");
+                  }
+               });
+            }
+       </script>
+}

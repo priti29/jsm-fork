@@ -1,0 +1,12 @@
+/.config
+/.vs
+/.vscode
+jsm33t.com/appsettings.Development.json
+jsm33t.com/appsettings.json
+jsm33t.com/bin
+/jsm33t.com.csproj
+/jsm33t.com.csproj.user
+jsm33t.com/obj
+jsm33t.com/Properties
+jsm33t.com/wwwroot/assets/library
+jsm33t.com/wwwroot/assets
