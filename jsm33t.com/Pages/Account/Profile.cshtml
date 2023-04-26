@@ -1,7 +1,7 @@
 ﻿@page "/account"
 @model jsm33t.com.Pages.Account.ProfileModel
 @{
-    
+
 }
 <div class="container py-5 mt-4 mt-lg-5 mb-lg-4 my-xl-5">
    <div class="row pt-sm-2 pt-lg-0">
@@ -20,7 +20,7 @@
                         <div class="pt-3 pt-sm-0 ps-sm-3">
                            <h3 class="h5 mb-2">
                               <span id="profilename">  
-                                @ViewData["fullname"]
+                                 @ViewData["fullname"]
                               </span>
                            </h3>
                            <div class="text-muted fw-medium d-flex flex-wrap flex-sm-nowrap align-iteems-center">
@@ -36,58 +36,58 @@
                         <select name="avatar" id="avatars" class="form-select">
                            @if (Model.AvatarDD != null)
                            { 
-                               @foreach (var avatar in Model.AvatarDD)
-                               {  
-                               <option value="@avatar.Image">@avatar.Title</option>
-                               }
+                              @foreach (var avatar in Model.AvatarDD)
+                              {  
+                                     <option value="@avatar.Image">@avatar.Title</option>
+                              }
                            }
                         </select>
                      </div>
                   </div>
                </div>
-                    @if (Model.UserDetailsDisplay != null)
-                    {
-                        <div class="row g-3 g-sm-4 mt-0 mt-lg-2">
-                           <div class="col-sm-6">
-                              <label class="form-label" for="fn">First name</label>
-                              <input name="fname" type="text" id="firstname" class="form-control bindenter1" aria-autocomplete="none" value="@Model.UserDetailsDisplay.FirstName" />
-                           </div>
-                           <div class="col-sm-6">
-                              <label class="form-label" for="ln">Last name</label>
-                              <input name="lname" type="text" id="lastname" class="form-control bindenter1" aria-autocomplete="none" value="@Model.UserDetailsDisplay.LastName" />
-                           </div>
-                           <div class="col-sm-6">
-                              <label class="form-label" for="email">Email address</label>
-                              <input name="email" type="text" id="email" class="form-control bindenter1" placeholder="Enter your email" value="@Model.UserDetailsDisplay.Email" aria-autocomplete="none" />
-                           </div>
-                           <div class="col-sm-6">
-                              <label class="form-label" for="phone">Phone <span class='text-muted'>(optional)</span></label>
-                              <input name="phone" type="tel" id="phone" class="form-control bindenter1" value="@Model.UserDetailsDisplay.Phone" data-format="{&quot;numericOnly&quot;: true, &quot;delimiters&quot;: [&quot;+1 &quot;, &quot; &quot;, &quot; &quot;], &quot;blocks&quot;: [0, 3, 3, 2]}" placeholder="" />
-                           </div>
-                           <div class="col-12 d-sm-flex align-items-center pt-sm-2 pt-md-3">
-                              <div class="form-label text-muted mb-2 mb-sm-0 me-sm-4">Gender:</div>
-                              <div class="form-check form-check-inline mb-0">
-                                 <input value="m" name="gender" type="radio" id="male" class="form-check-input" />
-                                 <label class="form-check-label" for="male">Male</label>
+               @if (Model.UserDetailsDisplay != null)
+               {
+                           <div class="row g-3 g-sm-4 mt-0 mt-lg-2">
+                              <div class="col-sm-6">
+                                 <label class="form-label" for="fn">First name</label>
+                                 <input name="fname" type="text" id="firstname" class="form-control bindenter1" aria-autocomplete="none" value="@Model.UserDetailsDisplay.FirstName" />
                               </div>
-                              <div class="form-check form-check-inline mb-0">
-                                 <input value="f" name="gender" type="radio" id="female" class="form-check-input" />
-                                 <label class="form-check-label" for="female">Female</label>
+                              <div class="col-sm-6">
+                                 <label class="form-label" for="ln">Last name</label>
+                                 <input name="lname" type="text" id="lastname" class="form-control bindenter1" aria-autocomplete="none" value="@Model.UserDetailsDisplay.LastName" />
                               </div>
-                              <div class="form-check form-check-inline mb-0">
-                                 <input value="o" name="gender" type="radio" id="other" class="form-check-input" />
-                                 <label class="form-check-label" for="other">Other</label>
+                              <div class="col-sm-6">
+                                 <label class="form-label" for="email">Email address</label>
+                                 <input name="email" type="text" id="email" class="form-control bindenter1" placeholder="Enter your email" value="@Model.UserDetailsDisplay.Email" aria-autocomplete="none" />
+                              </div>
+                              <div class="col-sm-6">
+                                 <label class="form-label" for="phone">Phone <span class='text-muted'>(optional)</span></label>
+                                 <input name="phone" type="tel" id="phone" class="form-control bindenter1" value="@Model.UserDetailsDisplay.Phone" data-format="{&quot;numericOnly&quot;: true, &quot;delimiters&quot;: [&quot;+1 &quot;, &quot; &quot;, &quot; &quot;], &quot;blocks&quot;: [0, 3, 3, 2]}" placeholder="" />
+                              </div>
+                              <div class="col-12 d-sm-flex align-items-center pt-sm-2 pt-md-3">
+                                 <div class="form-label text-muted mb-2 mb-sm-0 me-sm-4">Gender:</div>
+                                 <div class="form-check form-check-inline mb-0">
+                                    <input value="m" name="gender" type="radio" id="male" class="form-check-input" />
+                                    <label class="form-check-label" for="male">Male</label>
+                                 </div>
+                                 <div class="form-check form-check-inline mb-0">
+                                    <input value="f" name="gender" type="radio" id="female" class="form-check-input" />
+                                    <label class="form-check-label" for="female">Female</label>
+                                 </div>
+                                 <div class="form-check form-check-inline mb-0">
+                                    <input value="o" name="gender" type="radio" id="other" class="form-check-input" />
+                                    <label class="form-check-label" for="other">Other</label>
+                                 </div>
+                              </div>
+                              <div class="col-12 d-flex justify-content-end pt-3">
+                                 <button class="btn btn-primary ms-3" type="button" id="saveprof" onclick="save_prof()">Save Profile</button>
                               </div>
                            </div>
-                           <div class="col-12 d-flex justify-content-end pt-3">
-                              <button class="btn btn-primary ms-3" type="button" id="saveprof" onclick="save_prof()">Save Profile</button>
-                           </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <span> Something went wrong</span>
-                    }
+               }
+               else
+               {
+                           <span> Something went wrong</span>
+               }
 
                <div id="profstat"></div>
             </div>
@@ -132,35 +132,35 @@
 </div>
 <hr class="d-none d-dark-mode-block">
 
-  
+
 @section PageScripts
-{
-       <script>
-            function save_prof() {
-               $("#saveprof").html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving');
-               $("#saveprof").attr("class", "btn btn-primary pe-none");
-               // var mailSubc = $("#userEmail").val();
-               //  var token = $('input[name="__RequestVerificationToken"]').val();
-               $.ajax({
-                  type: "POST",
-                  url: "/account?handler=SubmitDeets",
-                  contentType: 'application/json',
-                  data: JSON.stringify({
-                     FirstName: $("#firstname").val(),
-                     LastName: $("#lastname").val()
-                  }),
-                  success: function (data) {
-                     $("#saveprof").html('Subscribe');
-                     $("#saveprof").attr("class", "btn btn-primary");
-                     $("#profstat").html("<div class=\"subscription-status mx-auto status-" + data.type + "\">" + data.message + "</div>");
-                  },
-                  error: function (jqXHR, textStatus, errorThrown) {
-                     console.log("Error:", errorThrown);
-                     $("#saveprof").html('Subscribe');
-                     $("#saveprof").attr("class", "btn btn-primary");
-                     $("#profstat").html("<div class=\"subscription-status mx-auto status-error\">something went wrong</div>");
-                  }
-               });
-            }
-       </script>
+   {
+          <script>
+               function save_prof() {
+                  $("#saveprof").html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving');
+                  $("#saveprof").attr("class", "btn btn-primary pe-none");
+                  // var mailSubc = $("#userEmail").val();
+                  //  var token = $('input[name="__RequestVerificationToken"]').val();
+                  $.ajax({
+                     type: "POST",
+                     url: "/account?handler=SubmitDeets",
+                     contentType: 'application/json',
+                     data: JSON.stringify({
+                        FirstName: $("#firstname").val(),
+                        LastName: $("#lastname").val()
+                     }),
+                     success: function (data) {
+                        $("#saveprof").html('Subscribe');
+                        $("#saveprof").attr("class", "btn btn-primary");
+                        $("#profstat").html("<div class=\"subscription-status mx-auto status-" + data.type + "\">" + data.message + "</div>");
+                     },
+                     error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("Error:", errorThrown);
+                        $("#saveprof").html('Subscribe');
+                        $("#saveprof").attr("class", "btn btn-primary");
+                        $("#profstat").html("<div class=\"subscription-status mx-auto status-error\">something went wrong</div>");
+                     }
+                  });
+               }
+          </script>
 }

@@ -17,7 +17,7 @@ namespace jsm33t.com.Pages.Account
             LoadUserData();
             LoadAvatarDropdown();
 
-            string fname="", lname="", role="";
+            string fname = "", lname = "", role = "";
             if (UserDetailsDisplay != null)
             {
                 if (UserDetailsDisplay.FirstName != null)
@@ -31,7 +31,7 @@ namespace jsm33t.com.Pages.Account
                 if (UserDetailsDisplay.Role != null)
                 { role = UserDetailsDisplay.Role.ToString(); }
             }
-            
+
             ViewData["role"] = role;
             ViewData["fullname"] = fname + " " + lname;
         }
@@ -89,7 +89,7 @@ namespace jsm33t.com.Pages.Account
         public async Task<JsonResult> OnPostSubmitDeets([FromBody] UserDeets EditProfile)
         {
             string connectionString = ConfigHelper.NewConnectionString;
-            string message ="something went wrong", type = "error";
+            string message = "something went wrong", type = "error";
             if (EditProfile.FirstName != null && EditProfile.LastName != null)
             {
                 if (EditProfile.FirstName == "")
@@ -117,7 +117,7 @@ namespace jsm33t.com.Pages.Account
                         message = "something went wrong";
                         type = "error";
                     }
-                }                
+                }
             }
             else
             {

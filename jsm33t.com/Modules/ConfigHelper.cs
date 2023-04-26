@@ -4,19 +4,10 @@
     {
         private static readonly IConfigurationRoot _config;
 
-        static ConfigHelper()
-        {
-            _config = new ConfigurationBuilder()
+        static ConfigHelper() => _config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
-        }
 
-        public static string NewConnectionString
-        {
-            get
-            {
-                return _config.GetConnectionString("jsmtConstr");
-            }
-        }
+        public static string NewConnectionString => _config.GetConnectionString("jsmtConstr");
     }
 }
