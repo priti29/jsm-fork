@@ -14,26 +14,35 @@ namespace jsm33t.com.Pages.Account
         public List<AvatarDropdown>? AvatarDD { get; set; }
         public void OnGet()
         {
-            LoadUserData();
-            LoadAvatarDropdown();
-
-            string fname = "", lname = "", role = "";
-            if (UserDetailsDisplay != null)
+            if (HttpContext.Session.GetString("username") == null)
             {
-                if (UserDetailsDisplay.FirstName != null)
-                { fname = UserDetailsDisplay.FirstName.ToString(); }
-                else
-                { fname = ""; }
-                if (UserDetailsDisplay.LastName != null)
-                { lname = UserDetailsDisplay.LastName.ToString(); }
-                else
-                { lname = ""; }
-                if (UserDetailsDisplay.Role != null)
-                { role = UserDetailsDisplay.Role.ToString(); }
+                Response.Redirect("/");
+            }
+            else
+            {
+                
+                LoadUserData();
+                LoadAvatarDropdown();
+                string fname = "", lname = "", role = "";
+                if (UserDetailsDisplay != null)
+                {
+                    if (UserDetailsDisplay.FirstName != null)
+                    { fname = UserDetailsDisplay.FirstName.ToString(); }
+                    else
+                    { fname = ""; }
+                    if (UserDetailsDisplay.LastName != null)
+                    { lname = UserDetailsDisplay.LastName.ToString(); }
+                    else
+                    { lname = ""; }
+                    if (UserDetailsDisplay.Role != null)
+                    { role = UserDetailsDisplay.Role.ToString(); }
+                }
+
+                ViewData["role"] = role;
+                ViewData["fullname"] = fname + " " + lname;
             }
 
-            ViewData["role"] = role;
-            ViewData["fullname"] = fname + " " + lname;
+            
         }
         public void OnPost() { }
 
@@ -43,7 +52,7 @@ namespace jsm33t.com.Pages.Account
             using var connection = new SqlConnection(connectionString);
             connection.Open();
             var command = new SqlCommand("SELECT * FROM TblUserProfile WHERE UserName = @Id", connection);
-            command.Parameters.AddWithValue("@Id", "jsm33t");
+            command.Parameters.AddWithValue("@Id", HttpContext.Session.GetString("username"));
             var reader = command.ExecuteReader();
 
             if (reader.Read())

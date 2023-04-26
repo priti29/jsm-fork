@@ -7,6 +7,8 @@ namespace jsm33t.com.Pages.Account
     {
         public void OnGet()
         {
+            HttpContext.Session.Clear();
+            Response.Redirect("/");
         }
     }
 }

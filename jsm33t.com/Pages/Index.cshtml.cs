@@ -39,7 +39,12 @@ namespace jsm33t.com.Pages
             string message, type = "error";
             try
             {
-                if (!IsValidEmail(mailSub.Trim()))
+                if (mailSub == null)
+                {
+                    message = "invalid email";
+                    type = "error";
+                }
+                else  if (!IsValidEmail(mailSub.Trim()))
                 {
                     message = "invalid email format";
                     type = "error";

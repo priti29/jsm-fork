@@ -107,6 +107,8 @@
                 }
             });
             $("#subbutton").click(function() {
+                if($("#userEmail").val() == "")
+                $("#emailstat").html("<div class=\"subscription-status mx-auto status-error\">email can't be blank</div>") ;
                 mail_init();
             });
         });
