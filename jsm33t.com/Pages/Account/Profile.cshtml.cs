@@ -48,6 +48,7 @@ namespace jsm33t.com.Pages.Account
         
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Expression value is never used", Justification = "<Pending>")]
         public void LoadUserData()
         {
             string connectionString = ConfigHelper.NewConnectionString;
@@ -68,7 +69,7 @@ namespace jsm33t.com.Pages.Account
                     EMail = reader.GetString(4),
                     Phone = reader.GetString(5),
                     Gender = reader.GetString(6),
-                   Bio = reader.GetString(12)
+                    Bio = reader.GetString(12)
                 };
             }
             else

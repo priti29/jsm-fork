@@ -40,7 +40,6 @@ namespace jsm33t.com.Pages.Account
                         SqlCommand checkcommand= new("SELECT * from TblUserProfile WHERE UserName = @username and PassWord =@password", connection);
                         checkcommand.Parameters.AddWithValue("@username",LoginCreds.UserName);
                         checkcommand.Parameters.AddWithValue("@password", LoginCreds.PassWord);
-                        //await checkcommand.ExecuteScalarAsync();
                         using (var reader = await checkcommand.ExecuteReaderAsync())
                         {
                             if (reader.Read())
@@ -53,7 +52,6 @@ namespace jsm33t.com.Pages.Account
                                 HttpContext.Session.SetString("username", username);
                                 HttpContext.Session.SetString("first_name", firstname);
                                 HttpContext.Session.SetString("role", role);
-                                // HttpContext.Session.SetString("avatar", role);
                                 //Response.Redirect("/account");
                                 message = "logging in...";
                                 type = "success";
