@@ -55,7 +55,7 @@ namespace jsm33t.com.Pages.Account
                                 HttpContext.Session.SetString("role", role);
                                 // HttpContext.Session.SetString("avatar", role);
                                 //Response.Redirect("/account");
-                                message = "successfully logged in";
+                                message = "logging in...";
                                 type = "success";
 
                             }

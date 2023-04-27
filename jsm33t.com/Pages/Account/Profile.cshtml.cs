@@ -2,6 +2,7 @@ using jsm33t.com.Models.View;
 using jsm33t.com.Modules;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace jsm33t.com.Pages.Account
@@ -120,6 +121,13 @@ namespace jsm33t.com.Pages.Account
                         message = "Changes Saved";
                         type = "success";
                         await connection.CloseAsync();
+
+                        if (HttpContext.Session.GetString("username") != null)
+                        {
+                            HttpContext.Session.SetString("first_name", EditProfile.FirstName.Trim());
+                           // HttpContext.Session.SetString("role", role);
+                            // HttpContext.Session.SetString("avatar", role);
+                        }
                     }
                     catch
                     {

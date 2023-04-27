@@ -330,7 +330,8 @@ Layout = null;
       <script>
 
        function login_init() {
-           
+           $("#loginbutton").html('Logging In..');
+           $("#loginbutton").attr("class", "btn btn-lg btn-primary w-100 mb-4 pe-none");
              $.ajax({
                      type: "POST",
                      url: "/account/login?handler=LoginInit",
@@ -340,8 +341,8 @@ Layout = null;
                         PassWord: $("#password").val()
                      }),
                      success: function (data) {
-                        $("#saveprof").html('Subscribe');
-                        $("#saveprof").attr("class", "btn btn-primary");
+                        $("#loginbutton").html('Log In');
+                        $("#loginbutton").attr("class", "btn btn-lg btn-primary w-100 mb-4");
                         $("#loginstat").html("<div class=\"subscription-status mx-auto status-" + data.type + "\">" + data.message + "</div>");
                         if(data.type == "success")
                         {
@@ -350,9 +351,9 @@ Layout = null;
                      },
                      error: function (jqXHR, textStatus, errorThrown) {
                         console.log("Error:", errorThrown.e);
-                        $("#saveprof").html('Subscribe');
-                        $("#saveprof").attr("class", "btn btn-primary");
-                        $("#loginstat").html("<div class=\"subscription-status mx-auto status-error\">something went wrong from ajax</div>");
+                        $("#loginbutton").html('Log In');
+                        $("#loginbutton").attr("class", "btn btn-lg btn-primary w-100 mb-4");
+                        $("#loginstat").html("<div class=\"subscription-status mx-auto status-error\">connection issue..</div>");
                      }
                   });   
                 
