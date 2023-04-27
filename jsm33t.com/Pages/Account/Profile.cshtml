@@ -1,7 +1,7 @@
 ﻿@page "/account"
 @model jsm33t.com.Pages.Account.ProfileModel
 @{
-
+    ViewData["bodybg"] = "bg-secondary";
 }
 <div class="container py-5 mt-4 mt-lg-5 mb-lg-4 my-xl-5">
    <div class="row pt-sm-2 pt-lg-0">
@@ -16,7 +16,7 @@
                <div id="profilepanel">
                   <div class="d-md-flex align-items-center">
                      <div class="d-sm-flex align-items-center">
-                        <div id="avatar_placeholder" class="rounded-circle bg-size-cover bg-position-center flex-shrink-0" style="width: 80px; height: 80px; background-image: url(/assets/images/avatars/default/mask.png);"></div>
+                        <div id="avatar_placeholder" class="rounded-circle bg-size-cover bg-position-center flex-shrink-0" style="width: 80px; height: 80px; background-image: url(/assets/images/avatars/default/cat.png);"></div>
                         <div class="pt-3 pt-sm-0 ps-sm-3">
                            <h3 class="h5 mb-2">
                               <span id="profilename">  
@@ -33,7 +33,7 @@
                      </div>
                      <div class="w-100 pt-3 pt-md-0 ms-md-auto col-sm-12" style="max-width: 212px;">
                         <div class="d-flex justify-content-between fs-sm pb-1 mb-2">Select your avatar</div>
-                        <select name="avatar" id="avatars" class="form-select">
+                        <select name="avatar" id="avatars" class="form-select" onchange="updateavatar()">
                            @if (Model.AvatarDD != null)
                            { 
                               @foreach (var avatar in Model.AvatarDD)
@@ -58,7 +58,7 @@
                               </div>
                               <div class="col-sm-6">
                                  <label class="form-label" for="email">Email address</label>
-                                 <input name="email" type="text" id="email" class="form-control bindenter1" placeholder="Enter your email" value="@Model.UserDetailsDisplay.Email" aria-autocomplete="none" />
+                                 <input name="email" type="text" id="email" class="form-control bindenter1" placeholder="Enter your email" value="@Model.UserDetailsDisplay.EMail" aria-autocomplete="none" />
                               </div>
                               <div class="col-sm-6">
                                  <label class="form-label" for="phone">Phone <span class='text-muted'>(optional)</span></label>
@@ -71,7 +71,7 @@
                                     <label class="form-check-label" for="male">Male</label>
                                  </div>
                                  <div class="form-check form-check-inline mb-0">
-                                    <input value="f" name="gender" type="radio" id="female" class="form-check-input" />
+                                        <input value="f" name="gender" type="radio" id="female" class="form-check-input" />
                                     <label class="form-check-label" for="female">Female</label>
                                  </div>
                                  <div class="form-check form-check-inline mb-0">
@@ -132,35 +132,34 @@
 </div>
 <hr class="d-none d-dark-mode-block">
 
-
 @section PageScripts
    {
           <script>
-               function save_prof() {
+              function updateavatar()
+              {
+                  document.getElementById("avatar_placeholder").style= "width: 80px; height: 80px; background-image: url(/assets/images/avatars/default/" + document.getElementById("avatars").value+".png);"
+              }
+              function save_prof() {
                   $("#saveprof").html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving');
                   $("#saveprof").attr("class", "btn btn-primary pe-none");
-                  // var mailSubc = $("#userEmail").val();
-                  //  var token = $('input[name="__RequestVerificationToken"]').val();
                   $.ajax({
-                     type: "POST",
-                     url: "/account?handler=SubmitDeets",
-                     contentType: 'application/json',
-                     data: JSON.stringify({
-                        FirstName: $("#firstname").val(),
-                        LastName: $("#lastname").val()
-                     }),
+                     type: "POST", url: "/account?handler=SubmitDeets", contentType: 'application/json',
+                     data: JSON.stringify({ FirstName: $("#firstname").val(),LastName: $("#lastname").val(),Phone: $("#phone").val(), EMail: $("#email").val() }),
                      success: function (data) {
-                        $("#saveprof").html('Subscribe');
+                        $("#saveprof").html('Save Changes');
                         $("#saveprof").attr("class", "btn btn-primary");
                         $("#profstat").html("<div class=\"subscription-status mx-auto status-" + data.type + "\">" + data.message + "</div>");
+                        $("#profilename").html($("#firstname").val() + " " +$("#lastname").val() );
+                        $("#title_master").html($("#firstname").val());
                      },
                      error: function (jqXHR, textStatus, errorThrown) {
                         console.log("Error:", errorThrown);
-                        $("#saveprof").html('Subscribe');
+                        $("#saveprof").html('Save Changes');
                         $("#saveprof").attr("class", "btn btn-primary");
                         $("#profstat").html("<div class=\"subscription-status mx-auto status-error\">something went wrong</div>");
                      }
                   });
+                   setTimeout(() => { $("#profstat").html(''); }, 5000);
                }
           </script>
 }

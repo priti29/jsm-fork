@@ -2,8 +2,16 @@
 @model IndexModel
 
 @{
-    ViewData["Title"] = "Home Page";
-    ViewData["WrapperMode"] = "dark-mode";
+            ViewData["Title"] = "Home";
+            ViewData["WrapperMode"] = "dark-mode";
+            ViewData["meta_keywords"] = "explicitly set keywords";
+            ViewData["meta_description"] = "explicitly set keywords";
+            ViewData["author"] = "explicitly set keywords";
+            ViewData["og_url"] = "explicitly set keywords";
+            ViewData["og_image"] = "explicitly set keywords";
+            ViewData["url"] = "explicitly set keywords";
+            ViewData["ActivePage"] = "Home";
+           
 }
 
   <section class="bg-dark dark-mode position-relative min-vh-100 overflow-hidden pt-5">
@@ -130,6 +138,7 @@
                    $("#subbutton").html('Subscribe');
                    $("#subbutton").attr("class", "btn btn-primary");
                    $("#emailstat").html("<div class=\"subscription-status mx-auto status-"+ data.type +"\">"+ data.message +"</div>") ;
+                   
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                    console.log("Error:", errorThrown);
@@ -137,7 +146,9 @@
                    $("#subbutton").attr("class", "btn btn-primary");
                    $("#emailstat").html("<div class=\"subscription-status mx-auto status-error\">something went wrong</div>") ;
                 }
+                
             });
+                setTimeout(() => { $("#emailstat").html(''); }, 5000);
         }
     </script>
     <script src="/assets/library/parallax-js/dist/parallax.min.js"></script>

@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using jsm33t.com.Modules;
 using System.Data.SqlClient;
 using System.Net.Mail;
+using jsm33t.com.Models.View;
 
 namespace jsm33t.com.Pages
 {
     [ValidateAntiForgeryToken]
     public class IndexModel : PageModel
     {
-
         public void OnGet()
         {
-
+            
         }
         public void OnPost()
         {

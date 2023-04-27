@@ -21,7 +21,6 @@ namespace jsm33t.com.Pages.Account
             }
             else
             {
-                
                 LoadUserData();
                 LoadAvatarDropdown();
                 string fname = "", lname = "", role = "";
@@ -43,9 +42,11 @@ namespace jsm33t.com.Pages.Account
                 ViewData["fullname"] = fname + " " + lname;
             }
 
-            
         }
-        public void OnPost() { }
+        public void OnPost()
+        {
+        
+        }
 
         public void LoadUserData()
         {
@@ -63,7 +64,11 @@ namespace jsm33t.com.Pages.Account
                     FirstName = reader.GetString(1),
                     LastName = reader.GetString(2),
                     UserName = reader.GetString(3),
-                    Role = reader.GetString(11)
+                    Role = reader.GetString(11),
+                    EMail = reader.GetString(4),
+                    Phone = reader.GetString(5),
+                    Gender = reader.GetString(6),
+                   Bio = reader.GetString(12)
                 };
             }
             else
@@ -107,6 +112,11 @@ namespace jsm33t.com.Pages.Account
                     message = "first name is mandatory";
                     type = "error";
                 }
+                else if (EditProfile.EMail == "")
+                {
+                    message = "email name is mandatory";
+                    type = "error";
+                }
                 else
                 {
                     try
@@ -114,18 +124,21 @@ namespace jsm33t.com.Pages.Account
                         using SqlConnection connection = new(connectionString);
 
                         await connection.OpenAsync();
-                        SqlCommand insertCommand = new("UPDATE TblUserProfile SET FirstName = @FirstName,LastName = @LastName where UserName = 'jsm33t'", connection);
+                        SqlCommand insertCommand = new("UPDATE TblUserProfile SET FirstName = @FirstName,LastName = @LastName,EMail = @EMail,Phone = @Phone where UserName = @UserName", connection);
                         insertCommand.Parameters.AddWithValue("@FirstName", EditProfile.FirstName.Trim());
                         insertCommand.Parameters.AddWithValue("@LastName", EditProfile.LastName.Trim());
+                        insertCommand.Parameters.AddWithValue("@EMail", EditProfile.EMail.Trim());
+                        insertCommand.Parameters.AddWithValue("@Phone", EditProfile.Phone.Trim());
+                        insertCommand.Parameters.AddWithValue("@UserName", HttpContext.Session.GetString("username"));
                         await insertCommand.ExecuteNonQueryAsync();
-                        message = "Changes Saved";
+                        message = "Changes Saved!!";
                         type = "success";
                         await connection.CloseAsync();
 
                         if (HttpContext.Session.GetString("username") != null)
                         {
                             HttpContext.Session.SetString("first_name", EditProfile.FirstName.Trim());
-                           // HttpContext.Session.SetString("role", role);
+                            // HttpContext.Session.SetString("role", role);
                             // HttpContext.Session.SetString("avatar", role);
                         }
                     }
