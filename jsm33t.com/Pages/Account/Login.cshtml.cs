@@ -37,7 +37,7 @@ namespace jsm33t.com.Pages.Account
                         using SqlConnection connection = new(connectionString);
                         await connection.OpenAsync();
 
-                        SqlCommand checkcommand= new("SELECT * from TblUserProfile WHERE UserName = @username and PassWord =@password", connection);
+                        SqlCommand checkcommand= new("select * from TblUserProfile where UserName = @username and PassWord =@password", connection);
                         checkcommand.Parameters.AddWithValue("@username",LoginCreds.UserName);
                         checkcommand.Parameters.AddWithValue("@password", LoginCreds.PassWord);
                         using (var reader = await checkcommand.ExecuteReaderAsync())
@@ -48,10 +48,11 @@ namespace jsm33t.com.Pages.Account
                                var username = reader.GetString(reader.GetOrdinal("UserName"));
                                var firstname = reader.GetString(reader.GetOrdinal("FirstName"));
                                 var role = reader.GetString(reader.GetOrdinal("Role"));
-                                var avatar = reader.GetString(reader.GetOrdinal("Role"));
+                                var avatar = reader.GetInt32(reader.GetOrdinal("AvatarId"));
                                 HttpContext.Session.SetString("username", username);
                                 HttpContext.Session.SetString("first_name", firstname);
                                 HttpContext.Session.SetString("role", role);
+                                HttpContext.Session.SetString("avatar", avatar.ToString());
                                 //Response.Redirect("/account");
                                 message = "logging in...";
                                 type = "success";

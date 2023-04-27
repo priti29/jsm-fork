@@ -3,6 +3,10 @@
 @{
     ViewData["bodybg"] = "bg-secondary";
 }
+@section StartupScript
+{
+   document.getElementById("avatars").value = @HttpContext.Session.GetString("avatar");
+}
 <div class="container py-5 mt-4 mt-lg-5 mb-lg-4 my-xl-5">
    <div class="row pt-sm-2 pt-lg-0">
       <div class="col-lg-12 pt-4 pb-2 pb-sm-4">
@@ -16,7 +20,10 @@
                <div id="profilepanel">
                   <div class="d-md-flex align-items-center">
                      <div class="d-sm-flex align-items-center">
-                        <div id="avatar_placeholder" class="rounded-circle bg-size-cover bg-position-center flex-shrink-0" style="width: 80px; height: 80px; background-image: url(/assets/images/avatars/default/cat.png);"></div>
+                                @{
+                                    var avtrid = @HttpContext.Session.GetString("avatar") + ".png";
+                                }
+                        <div id="avatar_placeholder" class="rounded-circle bg-size-cover bg-position-center flex-shrink-0" style="width: 80px; height: 80px; background-image: url(/assets/images/avatars/default/@avtrid);"></div>
                         <div class="pt-3 pt-sm-0 ps-sm-3">
                            <h3 class="h5 mb-2">
                               <span id="profilename">  
@@ -38,7 +45,7 @@
                            { 
                               @foreach (var avatar in Model.AvatarDD)
                               {  
-                                     <option value="@avatar.Image">@avatar.Title</option>
+                                     <option value="@avatar.Id">@avatar.Title</option>
                               }
                            }
                         </select>
@@ -140,17 +147,36 @@
                   document.getElementById("avatar_placeholder").style= "width: 80px; height: 80px; background-image: url(/assets/images/avatars/default/" + document.getElementById("avatars").value+".png);"
               }
               function save_prof() {
+              //    alert($("#avatars").val());
+
+                   var selectedOption = document.querySelector('input[name="gender"]:checked');
+                      if (selectedOption) {
+                         var gndrval = selectedOption.value;
+                      } else {
+                        var gndrval = "na";
+                      }
+
+
                   $("#saveprof").html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving');
                   $("#saveprof").attr("class", "btn btn-primary pe-none");
                   $.ajax({
                      type: "POST", url: "/account?handler=SubmitDeets", contentType: 'application/json',
-                     data: JSON.stringify({ FirstName: $("#firstname").val(),LastName: $("#lastname").val(),Phone: $("#phone").val(), EMail: $("#email").val() }),
+                     data: JSON.stringify({ 
+                         FirstName: $("#firstname").val(),
+                         LastName: $("#lastname").val(),
+                         Phone: $("#phone").val(),
+                         EMail: $("#email").val(),
+                         Gender: gndrval,
+                         AvatarId:$("#avatars").val()
+                     }),
                      success: function (data) {
                         $("#saveprof").html('Save Changes');
                         $("#saveprof").attr("class", "btn btn-primary");
                         $("#profstat").html("<div class=\"subscription-status mx-auto status-" + data.type + "\">" + data.message + "</div>");
                         $("#profilename").html($("#firstname").val() + " " +$("#lastname").val() );
                         $("#title_master").html($("#firstname").val());
+
+                        document.getElementById("layout_pfp").setAttribute("src", "/assets/images/avatars/default/"+ document.getElementById("avatars").value +".png");
                      },
                      error: function (jqXHR, textStatus, errorThrown) {
                         console.log("Error:", errorThrown);

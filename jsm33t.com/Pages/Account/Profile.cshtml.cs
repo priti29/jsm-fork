@@ -93,6 +93,7 @@ namespace jsm33t.com.Pages.Account
             {
                 AvatarDD.Add(new AvatarDropdown
                 {
+                    Id = reader.GetInt32(0),
                     Title = reader.GetString(1),
                     Image = reader.GetString(2),
                     Description = reader.GetString(3)
@@ -125,11 +126,13 @@ namespace jsm33t.com.Pages.Account
                         using SqlConnection connection = new(connectionString);
 
                         await connection.OpenAsync();
-                        SqlCommand insertCommand = new("UPDATE TblUserProfile SET FirstName = @FirstName,LastName = @LastName,EMail = @EMail,Phone = @Phone where UserName = @UserName", connection);
+                        SqlCommand insertCommand = new("UPDATE TblUserProfile SET FirstName = @FirstName,LastName = @LastName,EMail = @EMail,Phone = @Phone,AvatarId= @AvatarId,Gender = @Gender where UserName = @UserName", connection);
                         insertCommand.Parameters.AddWithValue("@FirstName", EditProfile.FirstName.Trim());
                         insertCommand.Parameters.AddWithValue("@LastName", EditProfile.LastName.Trim());
                         insertCommand.Parameters.AddWithValue("@EMail", EditProfile.EMail.Trim());
                         insertCommand.Parameters.AddWithValue("@Phone", EditProfile.Phone.Trim());
+                        insertCommand.Parameters.AddWithValue("@Gender", EditProfile.Gender.Trim());
+                        insertCommand.Parameters.AddWithValue("@AvatarId", EditProfile.AvatarId);
                         insertCommand.Parameters.AddWithValue("@UserName", HttpContext.Session.GetString("username"));
                         await insertCommand.ExecuteNonQueryAsync();
                         message = "Changes Saved!!";
@@ -139,6 +142,10 @@ namespace jsm33t.com.Pages.Account
                         if (HttpContext.Session.GetString("username") != null)
                         {
                             HttpContext.Session.SetString("first_name", EditProfile.FirstName.Trim());
+                            HttpContext.Session.SetString("avatar", EditProfile.AvatarId.ToString().Trim());
+                           
+
+
                             // HttpContext.Session.SetString("role", role);
                             // HttpContext.Session.SetString("avatar", role);
                         }

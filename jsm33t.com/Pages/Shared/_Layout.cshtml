@@ -24,11 +24,13 @@
     ViewData["username"] = Context.Session.GetString("username");
     ViewData["first_name"] = Context.Session.GetString("first_name");
     ViewData["role"] = Context.Session.GetString("role");
+    ViewData["avatar"] = Context.Session.GetString("avatar");
 }
 else
 {
     ViewData["first_name"] = "guest";
     ViewData["role"] = "guest";
+    ViewData["avatar"] = "default";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -115,6 +117,10 @@ else
                         }
                     }
                 });
+
+                @RenderSection("StartupScript", required: false)
+
+
             };
         })();
 
@@ -200,7 +206,10 @@ else
                         <!-- User signed in state. Account dropdown on screens > 576px-->
                         <div class="dropdown nav d-none d-sm-block order-lg-3">
                             <a class="nav-link d-flex align-items-center p-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                              <img class="border rounded-circle" src="/assets/images/avatars/default/default.png" width="48" alt="avatar image" id="avatarmaster"  />
+                            @{
+                                string avtr = ViewData["avatar"] + ".png";
+                            }
+                             <img class="border rounded-circle" src="/assets/images/avatars/default/@avtr" width="48" id="layout_pfp" alt="avatar image" />
 
                                         <div class="ps-2">
                                             <div class="fs-xs lh-1 opacity-60">Hello,</div>
@@ -285,7 +294,7 @@ else
                                        data-bs-toggle="dropdown" aria-expanded="false">
 
                                                 <img class="border rounded-circle"
-                                                     src="/assets/images/avatars/default/default.png" width="48" alt="avatar image" id="avtmobilemaster"  />
+                                                     src="/assets/images/avatars/default/@avtr" width="48" alt="avatar image" id="avtmobilemaster"  />
 
                                                 <div class="ps-2">
                                                     <div class="fs-xs lh-1 opacity-60">Hey,</div>
