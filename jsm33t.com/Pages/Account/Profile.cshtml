@@ -2,10 +2,20 @@
 @model jsm33t.com.Pages.Account.ProfileModel
 @{
     ViewData["bodybg"] = "bg-secondary";
+    var tocheck = "";
+    if (Model.UserDetailsDisplay.Gender == "m")
+    { tocheck = "male"; }
+    else if (Model.UserDetailsDisplay.Gender == "f")
+    { tocheck = "female"; }
+    else if (Model.UserDetailsDisplay.Gender == "o")
+    { tocheck = "other"; }
 }
 @section StartupScript
 {
+    //assign vals using startup script injection
    document.getElementById("avatars").value = @HttpContext.Session.GetString("avatar");
+   document.getElementById("@tocheck").checked = true;
+  
 }
 <div class="container py-5 mt-4 mt-lg-5 mb-lg-4 my-xl-5">
    <div class="row pt-sm-2 pt-lg-0">

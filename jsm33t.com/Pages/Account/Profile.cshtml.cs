@@ -143,8 +143,6 @@ namespace jsm33t.com.Pages.Account
                         {
                             HttpContext.Session.SetString("first_name", EditProfile.FirstName.Trim());
                             HttpContext.Session.SetString("avatar", EditProfile.AvatarId.ToString().Trim());
-                           
-
 
                             // HttpContext.Session.SetString("role", role);
                             // HttpContext.Session.SetString("avatar", role);

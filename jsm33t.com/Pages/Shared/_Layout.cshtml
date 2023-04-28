@@ -1,7 +1,5 @@
 ﻿@{
   
-
-
     ViewData["Title"] ??= "default value";
     ViewData["meta_keywords"] ??= "explicitly set keywords";
     ViewData["meta_description"] ??= "explicitly set keywords";
@@ -12,9 +10,7 @@
     ViewData["WrapperMode"] ??= "";
     //ViewData["bodybg"] ??= "";
 
-
 }
-
 
 @{
     var mySessionVariable = Context.Session.GetString("username"); 
@@ -77,7 +73,7 @@ else
                 preloader.classList.remove('active');
                 setTimeout(function () {
                     preloader.remove();
-                }, 500);
+                }, 0);
 
                 let elem_theme = localStorage.getItem("cust_theme");
                 if (elem_theme !== undefined && elem_theme !== "") { document.getElementById("custom_theme").innerHTML = elem_theme; }
@@ -86,9 +82,7 @@ else
                     var a = document.getElementById('custom_font');
                     a.href = elem_font;
                 }
-
-
-
+                    
                 document.addEventListener('keydown', function (event) {
                     if (event.ctrlKey && event.key === 'f') {
                         event.preventDefault();
@@ -119,7 +113,6 @@ else
                 });
 
                 @RenderSection("StartupScript", required: false)
-
 
             };
         })();
@@ -276,10 +269,10 @@ else
                                             </ul>
                                         </li>
                                         <li class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle" href="#"
+                                            <a class="dropdown-item dropdown-toggle @(ViewData["ActivePage"] == "Blog" ? "active" : "")" href="#"
                                                data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="/blog/home">/</a></li>
+                                                <li><a class="dropdown-item @(ViewData["ActivePage"] == "Blog" ? "active" : "")" href="/blog/home">/</a></li>
 
                                             </ul>
                                         </li>
