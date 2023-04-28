@@ -60,7 +60,7 @@ namespace jsm33t.com.Pages.Account
                             }
                             else
                             {
-                                message = "something went wrongno record found";
+                                message = "Invalid Credentials";
                                 type = "error";
                             }
                         }
@@ -68,7 +68,10 @@ namespace jsm33t.com.Pages.Account
                     }
                     catch(Exception ex)
                     {
-                        message = "something went wrong" + ex.ToString();
+                        if (HttpContext.Session.GetString("role") == "admin")
+                        { message = "something went wrong " + ex.Message.ToString(); }
+                        else
+                        { message = "something went wrong"; }
                         type = "error";
                     }
                 }

@@ -138,10 +138,10 @@
                </div>
                <span id="db_stat"></span>
                <div class="d-flex justify-content-end pt-3">
-                  <button class="btn btn-primary ms-3" type="button" id="save_password" onclick="save_pass()">Save Changes</button>
+                  <button class="btn btn-primary ms-3" type="button" id="savepass" onclick="save_pass()">Save Changes</button>
                   </span>
                </div>
-               <div id="passstatpanel"></div>
+               <div id="passstat"></div>
             </div>
          </section>
       </div>
@@ -149,23 +149,35 @@
 </div>
 <hr class="d-none d-dark-mode-block">
 
-@section PageScripts
+@section PageScriptsRaw
    {
           <script>
+           $(document).ready(function() {
+               $('.bindenter1').keypress(function(event) {
+                if (event.keyCode === 10 || event.keyCode === 13) {
+                    event.preventDefault();
+                    save_prof();
+                }
+               });
+               $('.bindenter2').keypress(function(event) {
+                if (event.keyCode === 10 || event.keyCode === 13) {
+                    event.preventDefault();
+                        save_pass();
+                }
+               });
+           });
+
               function updateavatar()
               {
                   document.getElementById("avatar_placeholder").style= "width: 80px; height: 80px; background-image: url(/assets/images/avatars/default/" + document.getElementById("avatars").value+".png);"
               }
               function save_prof() {
-              //    alert($("#avatars").val());
-
                    var selectedOption = document.querySelector('input[name="gender"]:checked');
                       if (selectedOption) {
                          var gndrval = selectedOption.value;
                       } else {
                         var gndrval = "na";
                       }
-
 
                   $("#saveprof").html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving');
                   $("#saveprof").attr("class", "btn btn-primary pe-none");
@@ -180,7 +192,7 @@
                          AvatarId:$("#avatars").val()
                      }),
                      success: function (data) {
-                        $("#saveprof").html('Save Changes');
+                        $("#saveprof").html('Save Profile');
                         $("#saveprof").attr("class", "btn btn-primary");
                         $("#profstat").html("<div class=\"subscription-status mx-auto status-" + data.type + "\">" + data.message + "</div>");
                         $("#profilename").html($("#firstname").val() + " " +$("#lastname").val() );
@@ -190,12 +202,40 @@
                      },
                      error: function (jqXHR, textStatus, errorThrown) {
                         console.log("Error:", errorThrown);
-                        $("#saveprof").html('Save Changes');
+                        $("#saveprof").html('Save Profile');
                         $("#saveprof").attr("class", "btn btn-primary");
                         $("#profstat").html("<div class=\"subscription-status mx-auto status-error\">something went wrong</div>");
                      }
                   });
                    setTimeout(() => { $("#profstat").html(''); }, 5000);
                }
+
+
+                function save_pass() {
+                  $("#savepass").html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving');
+                  $("#savepass").attr("class", "btn btn-primary pe-none");
+                  $.ajax({
+                     type: "POST", url: "/account?handler=SubmitPass", contentType: 'application/json',
+                     data: JSON.stringify({ 
+                        NewPass: $("#new_pass").val(),
+                        ConfirmPass: $("#confirm_pass").val()
+                     }),
+                     success: function (data) {
+                        $("#savepass").html('Save Changes');
+                        $("#savepass").attr("class", "btn btn-primary");
+                        $("#passstat").html("<div class=\"subscription-status mx-auto status-" + data.type + "\">" + data.message + "</div>");
+                     },
+                     error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("Error:", errorThrown);
+                        $("#savepass").html('Save Changes');
+                        $("#savepass").attr("class", "btn btn-primary");
+                        $("#passstat").html("<div class=\"subscription-status mx-auto status-error\">something went wrong ajax</div>");
+                     }
+                  });
+                   setTimeout(() => { $("#passstat").html(''); }, 5000);
+               }
+
+
+
           </script>
 }

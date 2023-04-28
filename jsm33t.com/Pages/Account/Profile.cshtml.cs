@@ -8,6 +8,12 @@ using System.Data.SqlClient;
 namespace jsm33t.com.Pages.Account
 {
     [IgnoreAntiforgeryToken]
+    public class PassCode
+    {
+        public string? NewPass { get; set; }
+        public string? ConfirmPass { get; set; }
+    }
+    [IgnoreAntiforgeryToken]
     public class ProfileModel : PageModel
     {
         public UserDeets? UserDetailsDisplay { get; set; }
@@ -48,7 +54,6 @@ namespace jsm33t.com.Pages.Account
         
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Expression value is never used", Justification = "<Pending>")]
         public void LoadUserData()
         {
             string connectionString = ConfigHelper.NewConnectionString;
@@ -151,6 +156,58 @@ namespace jsm33t.com.Pages.Account
                     catch
                     {
                         message = "something went wrong";
+                        type = "error";
+                    }
+                }
+            }
+            else
+            {
+                message = "something went wrong:";
+                type = "error";
+            }
+            var keys = new { message, type };
+            return new JsonResult(keys);
+        }
+
+        public async Task<JsonResult> OnPostSubmitPass([FromBody] PassCode passCode)
+        {
+            string connectionString = ConfigHelper.NewConnectionString;
+            string message = "something went wrong", type = "error";
+            if (passCode.NewPass != null && passCode.ConfirmPass!= null)
+            {
+                if (passCode.NewPass == "")
+                {
+                    message = "enter the password";
+                    type = "error";
+                }
+                else if (passCode.ConfirmPass== "")
+                {
+                    message = "Confirm your password";
+                    type = "error";
+                }
+                else if (passCode.NewPass != passCode.ConfirmPass )
+                {
+                    message = "Passwords don't match";
+                    type = "error";
+                }
+                else
+                {
+                    try
+                    {
+                        using SqlConnection connection = new(connectionString);
+
+                        await connection.OpenAsync();
+                        SqlCommand insertCommand = new("UPDATE TblUserProfile SET Password = @Password where UserName = @UserName", connection);
+                        insertCommand.Parameters.AddWithValue("@Password", passCode.NewPass.Trim());
+                        insertCommand.Parameters.AddWithValue("@UserName", HttpContext.Session.GetString("username"));
+                        await insertCommand.ExecuteNonQueryAsync();
+                        message = "Changes Saved!!";
+                        type = "success";
+                        await connection.CloseAsync();
+                    }
+                    catch(Exception ex)
+                    {
+                        message = "something went wrong:" + ex.Message.ToString();
                         type = "error";
                     }
                 }

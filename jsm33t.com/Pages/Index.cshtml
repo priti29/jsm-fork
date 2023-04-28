@@ -104,7 +104,7 @@
     </section>
 
 
-@section PageScripts
+@section PageScriptsRaw
 {
     <script>
         $(document).ready(function() {
@@ -151,10 +151,14 @@
                 setTimeout(() => { $("#emailstat").html(''); }, 5000);
         }
     </script>
-    <script src="/assets/library/parallax-js/dist/parallax.min.js"></script>
-    <script src="/assets/library/aos/dist/aos.js"></script>
-    <script src="/assets/library/lottiefiles/lottie-player/dist/lottie-player.js"></script>
+   
     
+}
+@section PageScriptsPacks
+{
+         <script src="/assets/library/parallax-js/dist/parallax.min.js"></script>
+        <script src="/assets/library/aos/dist/aos.js"></script>
+        <script src="/assets/library/lottiefiles/lottie-player/dist/lottie-player.js"></script>
 }
 
    @section PageStyles {

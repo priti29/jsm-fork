@@ -73,7 +73,7 @@ else
                 preloader.classList.remove('active');
                 setTimeout(function () {
                     preloader.remove();
-                }, 0);
+                }, 500);
 
                 let elem_theme = localStorage.getItem("cust_theme");
                 if (elem_theme !== undefined && elem_theme !== "") { document.getElementById("custom_theme").innerHTML = elem_theme; }
@@ -103,7 +103,6 @@ else
                             localStorage.removeItem("mode");
                         }
                         else {
-
                             themeMode.checked = true;
                             if (persMode) { persMode.checked = true; }
                             root.classList.add('dark-mode');
@@ -392,15 +391,17 @@ else
             }
         }
     </script>
+    @RenderSection("PageScriptsRaw", required: false)
     <script src="/assets/library/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/library/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
     <script src="/assets/library/nouislider/dist/nouislider.min.js"></script>
-
-
-    @RenderSection("PageScripts", required: false)
-
-    <script src="/assets/js/theme.min.js"></script>
+    @RenderSection("PageScriptsPacks", required: false)
+     <script src="/assets/js/theme.min.js"></script>
     <script src="/assets/js/jsm33t.js"></script>
+   
+  
+
+   
 
     
 </body>
